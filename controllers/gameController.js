@@ -137,6 +137,9 @@ exports.game_start = (req, res) => {
                     }
                 }
                 if (!hasPlayed) {
+                    //todo: update hints and skips based on game
+                    user.hints=user.hints+2;
+                    user.skips=user.skips+3;
                     user.quesIndexInfo.push({
                         gameID: gameID,
                         quesIndex: 1
@@ -174,8 +177,6 @@ exports.game_start = (req, res) => {
 }
 
 exports.game_play = (req, res) => {
-
-    //todo: Update hints and number of skips based on game
 
     const gameID = req.session.gameID
     User.findById(req.session.user_id, async (err, user) => {

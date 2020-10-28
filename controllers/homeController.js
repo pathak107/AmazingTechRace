@@ -21,7 +21,7 @@ exports.home_page_get = (req, res) => {
 
             return res.render('home', {
                 games: games,
-                message: "All the games that are available.",
+                message: "Choose from the following games.",
                 user: user,
                 isLogged: req.session.isLogged
             })

@@ -56,6 +56,9 @@
     $.get("/game/useHint/<%= ques._id %>", (data, status) => {
       if (data.success == true) {
         showHints();
+      }else{
+        $("#hints").html('<p>Looks like some kind of error occured. Please try again.</p>');
+        $("#useHintBtn").html('')
       }
     });
   }
