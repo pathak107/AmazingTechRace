@@ -34,7 +34,7 @@ app.use(session({
   saveUninitialized: false,
   store: store,
   cookie: {
-    //remeber to set this to true when in production
+    //todo:remeber to set this to true when in production
     secure: false,
     maxAge:60*60*1000 //1 hour
   }

@@ -17,6 +17,13 @@
   </div>
 </div>
 <script>
+  $('#showHints').modal({
+      dismissible: true, // Modal can be dismissed by clicking outside of the modal
+      onCloseEnd: function() { // Callback for Modal close
+        alert('Closed');  
+      } 
+    }
+  ); 
   function showHints() {
     //showing loader before fetching requests
     $('#hints').html(`<div class="progress">
@@ -119,6 +126,7 @@
   </div>
 
   <input class="bttn" type="submit">
+
   <%if(user.skips>0){%>
   <a class="bttn" href="/game/quesSkip">Skip Ques</a>
   <%}%>
