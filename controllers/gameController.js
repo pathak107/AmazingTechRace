@@ -140,6 +140,10 @@ exports.game_start = (req, res) => {
                     //todo: update hints and skips based on game
                     user.hints=user.hints+2;
                     user.skips=user.skips+3;
+
+                    //saving the timestamp
+                    user.timestamp=Date.now()
+                    console.log(user.timestamp)
                     user.quesIndexInfo.push({
                         gameID: gameID,
                         quesIndex: 1
@@ -231,7 +235,7 @@ exports.game_answerCheck = (req, res) => {
             error:err
         })}
 
-        if (ans.toUpperCase() == ques.answer.toUpperCase()) {
+        if (ans.toUpperCase().replace(/\s+/g, '') == ques.answer.toUpperCase().replace(/\s+/g, '')) {
             console.log('correct')
             User.findById(req.session.user_id, (err, user) => {
                 if (err){return res.json({
@@ -239,7 +243,6 @@ exports.game_answerCheck = (req, res) => {
                     answer: null,
                     error:err
                 })}
-
                 //seraching
                 for (let i = 0; i < user.quesIndexInfo.length; i++) {
                     if (user.quesIndexInfo[i].gameID == gameID) {
@@ -247,7 +250,18 @@ exports.game_answerCheck = (req, res) => {
                         user.markModified('quesIndexInfo')
                     }
                 }
-                user.score += 5;
+
+                //calulate the difference in time for solving this question and also update
+                //the timestamp for next question
+                var timeDiff;
+                if(Date.now() - (new Date(user.timestamp)) > 0){
+                    timeDiff= Date.now() - (new Date(user.timestamp));
+                }
+                
+                //inverse bcoz more the time taken lesser should be the score
+                //5* bcoz we're assumin for 5 days
+                user.score += Math.ceil((5*24*60*60*1000) / timeDiff);
+                user.timestamp=Date.now()
                 user.save((err) => {
                     if (err){return res.json({
                         success:false,

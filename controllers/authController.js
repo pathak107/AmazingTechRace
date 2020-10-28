@@ -107,3 +107,20 @@ exports.logout_user = (req, res) => {
         res.redirect('/');
     })
 }
+
+
+exports.changeUID_get = (req, res) => {
+    res.render('changeUserID', {
+        message: "You can change you TT user ID if you faced some issue while registering.",
+        isLogged: req.session.isLogged
+    });
+}
+
+exports.changeUID = (req, res) => {
+    User.findById(req.session.user_id,(err,user)=>{
+        user.regno=req.body.UID;
+        user.save((err)=>{
+            return res.redirect('/home')
+        })
+    })
+}

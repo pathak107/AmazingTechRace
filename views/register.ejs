@@ -6,12 +6,14 @@
 			<h4 class="regLog center-align">Register</h4>
 		</div>
 		<div class="card-content white">
-			
+
 			<form action="/auth/register" method="POST" style="white-space: none;">
 				<div class="inputs">
-					<div class="inpur">
-						<p> <%= message%></p>
-					</div>
+
+					<p>Please generate user ID from Tech Tatva's official website if you haven't already</p>
+					<br>
+					<p> <%= message%></p>
+
 
 					<div class="input">
 						<input name="name" type="text" placeholder="name">
@@ -20,10 +22,10 @@
 						<input name="email" type="email" placeholder="email">
 					</div>
 					<div class="input">
-						<input name="regno" type="text" placeholder="registration number">
+						<input id="ttUID" name="regno" type="number" placeholder="UserID from TT's official website">
 					</div>
 					<div class="input">
-						<input name="phNumber" type="text" placeholder="phone Number">
+						<input name="phNumber" type="number" placeholder="phone Number">
 					</div>
 					<div class="input">
 						<input name="password" type="password" placeholder="password">

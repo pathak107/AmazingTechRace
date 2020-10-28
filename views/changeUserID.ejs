@@ -1,0 +1,21 @@
+<%- include('./partials/header.ejs'); -%>
+<link rel="stylesheet" type="text/css" href="/loginregisterstyle.css">
+
+<div class="container">
+	<div class="card">
+		<div class="row">
+			<h4 class="regLog center-align">Change TT User ID</h4>
+		</div>
+		<div class="card-content white">
+			<form action="/auth/changeUID" method="POST">
+				<p> <%= message%></p>
+				<div class="inputs">
+					<div class="input">
+						<input placeholder="New User ID" name="UID" type="number">
+					</div>
+				</div>
+				<button class="bttn" type="submit">Change</button>
+			</form>
+		</div>
+	</div>
+</div>

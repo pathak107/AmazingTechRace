@@ -13,7 +13,6 @@ const UserSchema = new mongoose.Schema({
     regno: {
         type: String,
         required: true,
-        unique:true
     },
     phNumber: {
         type: String,

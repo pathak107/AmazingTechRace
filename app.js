@@ -1,9 +1,13 @@
 require('dotenv').config()
 const express=require('express');
+const compression = require('compression')
 const mongoose=require('mongoose')
 const session = require('express-session')
 const bodyParser = require('body-parser');
 const app=express();
+
+//using gzip to reduce body sizes
+app.use(compression())
 
 //setting bodyparser
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));

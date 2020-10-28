@@ -17,6 +17,8 @@ router.get('/auth/register',authController.register_page_get)
 router.get('/auth/logout',authController.logout_user)
 router.post('/auth/login',authController.login_user)
 router.post('/auth/register',authController.register_user)
+router.get('/auth/changeUID',authController.changeUID_get)
+router.post('/auth/changeUID',authController.changeUID)
 
 //admin routes
 router.get('/admin/login',adminController.admin_login_get)
