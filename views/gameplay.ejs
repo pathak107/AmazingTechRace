@@ -1,0 +1,91 @@
+<%- include('./partials/header.ejs'); -%>
+
+
+
+<!-- Modal Structure -->
+<div id="showHints" class="modal">
+  <div class="modal-content">
+    <h4>Use Hints</h4>
+    <p>Remember using hints will only grant you +3 points on correctly answering instead of the usual +5. Similarly
+      using 2 hints will grant only +1 point.</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+  </div>
+</div>
+<script>
+  function showHints(){
+   
+  }
+</script>
+
+<!-- Modal Structure -->
+<div id="buyHints" class="modal">
+  <div class="modal-content">
+    <h4>Buy Hints</h4>
+    <p>You can buy hints with your current score. Buying one hint will cost 2 points from your score.</p>
+    <p>Your score: <%=user.score%> points</p>
+    <%if(user.score>2){%>
+    <a class="bttn" href="/game/buyHint">Buy 1 hint with 2 points.</a>
+    <%}else{%>
+      <p>Sorry but you don't have enough score to buy hints.</p>
+    <%}%>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+
+<div id="main">
+  <section id="popular" class="section  section-popular scrollspy">
+    <div class="container center-align">
+      <div class="row">
+        <div class="col s12 m3">
+          <p>Name: <%=user.name%></p>
+        </div>
+        <div class="col s12 m3">
+          <p>Score: <%=user.score%></p>
+        </div>
+        <div class="col s12 m3">
+          <p>Hints: <%=user.hints%></p>
+        </div>
+        <div class="col s12 m3">
+          <p>Skips: <%=user.skips%></p>
+        </div>
+
+      </div>
+      <h5><%= message %></h5>
+      <form class="col s12" action="/game/answerCheck" method="post">
+        <div class="row cyan darken-3 question-card valign-wrapper">
+          <div class="Quest">
+            <h6><strong>This question has <%= ques.hints.length %> hints.</strong></h6>
+            <h5><%- ques.question %></h5>
+          </div>
+        </div>
+        <br>
+
+        <div class="row cyan darken-3 question-card valign-wrapper">
+          <div class="input-field col s12">
+            <input type="text" name="ans" placeholder="Answer" class="white-text">
+            <input type="text" name="quesID" value="<%= ques._id %>" hidden>
+          </div>
+        </div>
+
+        <input class="bttn" type="submit">
+        <%if(user.skips>0){%>
+        <a class="bttn" href="/game/quesSkip">Skip Ques</a>
+        <%}%>
+        <%if(user.hints>0 && ques.hints.length>0){%>
+        <!-- Modal Trigger -->
+        <button data-target="showHints" onclick="showHints()" class="bttn modal-trigger">Use Hints</button>
+        <%}%>
+        
+          <!-- Modal Trigger -->
+        <button data-target="buyHints"  class="bttn modal-trigger">Buy Hints</button>
+        
+
+      </form>
+    </div>
+
+  </section>
+</div>

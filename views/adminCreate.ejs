@@ -1,0 +1,51 @@
+<%- include('./adminPartials/adminHeader'); -%>
+    <div class="container">
+        <h1>Create a Game</h1>
+        <h3><%=message%></h3>
+        <div class="row">
+            <form action="/admin/createGame" method="post">
+                <div class="input-field col s12">
+                    <input type="text" name="title" id="" placeholder="title">
+                </div>
+                <div class="input-field col s12">
+                    <input type="text" name="description" id="" placeholder="description">
+                </div>
+                <div class="input-field col s12">
+                    <input type="datetime-local" name="startTime" id="" placeholder="start time">
+                </div>
+                <div class="input-field col s12">
+                    <input type="datetime-local" name="endTime" id="" placeholder="end time">
+                </div>
+                <div class="input-field col s12">
+                    <input type="number" name="hints" placeholder="Total allowable hints.">
+                </div>
+                <button class="btn waves-effect waves-light" type="submit" name="action">Create Game</button>
+            </form>
+        </div>
+
+        <div class="row">
+            <%for(var i=0; i< games.length; i++){%>
+            <div class="col s12 m4 l4">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title"><%= games[i].title %></span>
+                        <p><%= games[i].description %></p>
+                        <br>
+                        <p class="deep-purple-text darken-4">Start At: <%= games[i].startTime %></p>
+                        <p class="deep-purple-text darken-4">Ends At: <%= games[i].endTime %></p>
+                    </div>
+                    <div class="card-action deep-purple darken-4">
+                        <a href="/admin/deleteGame/<%= games[i]._id %>">Delete Game</a>
+                    </div>
+                </div>
+            </div>
+            <%}%>
+            
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,215 @@
+body {
+    background: linear-gradient(135deg, hsl(197, 81%, 21%)0%, #05212b 100%);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #ff8f00;
+    font-family: 'Roboto', sans-serif;
+}
+
+p {
+    font-family: 'Oxygen', sans-serif;
+}
+
+.Ques {
+    color: #cb6d14;
+}
+
+.Quest {
+    color: white;
+}
+
+
+#leftbox {
+    padding: 10%;
+}
+
+
+#leftbox h1 {
+    text-transform: uppercase;
+    font-size: 4rem;
+    color: #ff8f00;
+    font-weight: 800;
+    font-family: 'Roboto', sans-serif;
+}
+
+#leftbox h6 {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: white;
+}
+
+.bttn {
+    background-color: #ff8f00;
+    border-radius: 2rem;
+    color: #fafafa;
+    display: inline-block;
+    margin-top: 2rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    box-shadow: none;
+    border: none;
+    padding: 1rem 2.5rem;
+    text-transform: uppercase;
+    transition: background-color 650ms;
+    font-family: 'Oxygen', sans-serif;
+    font-weight: 800;
+}
+
+.bttn:hover {
+    background-color: #ffa000;
+}
+
+.brand-logo {
+    font-family: 'Oswald', sans-serif;
+    margin-left: 1rem;
+    font-size: 2.5rem;
+}
+
+.na {
+    font-family: 'Oswald', sans-serif;
+    color: #ff8f00;
+}
+
+.nav-wrapper {
+    background-color: #0B0C10;
+}
+
+.navbar {
+    background: #0B0C10;
+    font-family: 'Oswald', sans-serif;
+}
+
+.brand-logo {
+    font-size: 2.5rem;
+    color: #ff8f00;
+}
+
+.section h2 {
+    color: #ff8f00;
+    font-family: 'Oxygen', sans-serif;
+    font-weight: 800;
+}
+
+
+.section p {
+    color: white;
+    font-family: 'Oxygen', sans-serif;
+    font-weight: 800;
+}
+
+h4 {
+    font-family: 'Oxygen', sans-serif;
+    font-weight: 800;
+    color: #ff8f00;
+}
+
+p {
+    font-family: 'Oxygen', sans-serif;
+    font-weight: 800;
+}
+
+#container {
+    width: 600px;
+    height: auto;
+}
+
+/* .row {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 40px;
+	border-bottom: 1px solid #AFAFAF;
+} */
+
+.question-card {
+    padding: 0.5%;
+    border-radius: 2rem;
+    text-align: center;
+}
+
+.Ques h2 {
+    font-family: 'Oxygen', sans-serif;
+    font-weight: 800;
+}
+
+.Quest h5 {
+    font-family: 'Oxygen', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+}
+.Quest h6 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    font-family: 'Oxygen', sans-serif;
+    font-weight: 800;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    font-family: 'Oxygen', sans-serif;
+    font-weight: 800;
+    transition: 0.3s;
+}
+
+.sidenav h5 {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    font-family: 'Oxygen', sans-serif;
+    font-weight: 800;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
+}

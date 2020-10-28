@@ -1,0 +1,24 @@
+<%- include('./partials/header.ejs'); -%>
+<link rel="stylesheet" type="text/css" href="/loginregisterstyle.css">
+
+<div class="container">
+	<div class="card">
+		<div class="row">
+			<h4 class="regLog center-align">Login</h4>
+		</div>
+		<div class="card-content white">
+			<form action="/auth/login" method="POST">
+				<p> <%= message%></p>
+				<div class="inputs">
+					<div class="input">
+						<input placeholder="Email" name="email" type="email">
+					</div>
+					<div class="input">
+						<input placeholder="Password" name="password" type="password">
+					</div>
+				</div>
+				<button class="bttn" type="submit">Login</button>
+			</form>
+		</div>
+	</div>
+</div>

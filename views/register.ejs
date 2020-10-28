@@ -1,0 +1,71 @@
+<%- include('./partials/header.ejs'); -%>
+<link rel="stylesheet" type="text/css" href="/loginregisterstyle.css">
+<div class="container">
+	<div class="card">
+		<div class="row">
+			<h4 class="regLog center-align">Register</h4>
+		</div>
+		<div class="card-content white">
+			
+			<form action="/auth/register" method="POST" style="white-space: none;">
+				<div class="inputs">
+					<div class="inpur">
+						<p> <%= message%></p>
+					</div>
+
+					<div class="input">
+						<input name="name" type="text" placeholder="name">
+					</div>
+					<div class="input">
+						<input name="email" type="email" placeholder="email">
+					</div>
+					<div class="input">
+						<input name="regno" type="text" placeholder="registration number">
+					</div>
+					<div class="input">
+						<input name="phNumber" type="text" placeholder="phone Number">
+					</div>
+					<div class="input">
+						<input name="password" type="password" placeholder="password">
+					</div>
+				</div>
+				<button class="bttn" type="submit">Register</button>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- <div class="align">
+	<div class="card">
+		<div class="head">
+			<div></div>
+			<a id="register" class="selected">Register</a>
+			<div></div>
+		</div>
+		<div class="tabs" style="white-space: none; word-wrap: normal;">
+			<form action="/auth/register" method="POST" style="white-space: none;">
+				<div class="inputs">
+					<div class="inpur">
+						<p> <%= message%></p>
+					</div>
+
+					<div class="input">
+						<input name="name" type="text" placeholder="name">
+					</div>
+					<div class="input">
+						<input name="email" type="email" placeholder="email">
+					</div>
+					<div class="input">
+						<input name="regno" type="text" placeholder="registration number">
+					</div>
+					<div class="input">
+						<input name="phNumber" type="text" placeholder="phone Number">
+					</div>
+					<div class="input">
+						<input name="password" type="password" placeholder="password">
+					</div>
+				</div>
+				<button class="bttn" type="submit">Register</button>
+			</form>
+		</div>
+	</div>
+</div> -->

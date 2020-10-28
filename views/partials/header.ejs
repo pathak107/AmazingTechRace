@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oxygen&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+
+  <!-- Main style sheet -->
+  <link rel="stylesheet" type="text/css" href="/styles.css">
+  <link rel="icon" href="/acumenLogo.png" type="image/png" sizes="16x16">
+
+
+  <!--Import materialize.css-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <script src="https://kit.fontawesome.com/c7857b5d76.js" crossorigin="anonymous"></script>
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>Amazing Tech Race</title>
+</head>
+
+<body>
+  <div class="navbar-fixed">
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-wrapper">
+          <a href="/" class="brand-logo"> <span><img style="width: 30px;" src="/acumenLogo.png" alt=""></span> ᗩTᖇ</a>
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="/">Home</a></li>
+            <li>
+              <!-- <a href="#popular">Instructions</a> -->
+              <a class=" modal-trigger" href="#rules">Instructions</a>
+              <div id="rules" class="modal">
+                <div class="modal-content">
+                  <h4 class="amber-text text-darken-3">Instructions</h4>
+                  <h6 class="grey-text text-darken-4">1. Lorem ipsum dolor sit amet, consectetu</h6>
+                </div>
+                <div class="modal-footer">
+                  <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+                </div>
+              </div>
+            </li>
+            <li><a href="/home/leaderboard">Leaderboard</a></li>
+
+
+            <% if(isLogged==true){%>
+            <li><a href="/home">Play Now</a></li>
+            <li><a href="#search">Purchase Hints</a></li>
+            <li><a href="/auth/logout">Logout</a></li>
+            <%}else{%>
+            <li><a href="/auth/login">Login</a></li>
+            <li><a href="/auth/register">Register</a></li>
+            <%}%>
+            <li><a href="/home/contact">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <ul class="sidenav" id="mobile-demo">
+    <li><a href="/">Home</a></li>
+            <li>
+              <!-- <a href="#popular">Instructions</a> -->
+              <a class=" modal-trigger" href="#rules-mobile">Instructions</a>
+              <div id="rules-mobile" class="modal">
+                <div class="modal-content">
+                  <h4 class="black-text text-darken-2">Instructions</h4>
+                  <h6 class="black-text text-darken-2">1. Lorem ipsum dolor sit amet, consectetu</h6>
+                  <h6 class="black-text text-darken-2">2. Lorem ipsum dolor sit amet, consectetu</h6>
+                  <h6 class="black-text text-darken-2">3. Lorem ipsum dolor sit amet, consectetu</h6>
+                  <h6 class="black-text text-darken-2">4. Lorem ipsum dolor sit amet, consectetu</h6>
+                </div>
+                <div class="modal-footer">
+                  <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+                </div>
+              </div>
+            </li>
+            <li><a href="/home/leaderboard">Leaderboard</a></li>
+            
+
+            <% if(isLogged==true){%>
+            <li><a href="/home">Play Now</a></li>
+            <li><a href="#search">Purchase Hints</a></li>
+            <li><a href="/auth/logout">Logout</a></li>
+            <%}else{%>
+            <li><a href="/auth/login">Login</a></li>
+            <li><a href="/auth/register">Register</a></li>
+            <%}%>
+            <li><a href="/home/contact">Contact Us</a></li>
+  </ul>
+  <script>
+    $(document).ready(function () {
+      $('.sidenav').sidenav();
+    });
+    $(document).ready(function () {
+      $('.modal').modal();
+    });
+  </script>
+  </div>

@@ -1,0 +1,31 @@
+<%- include('./partials/header.ejs'); -%>
+<div class="container">
+  <div class="row">
+    <div class="col s12 m6 l6">
+      <img class="responsive-img" style="padding: 10%;" src="/acumenLogo.png">
+    </div>
+    <div>
+      <div id="leftbox"  class="col s12 m6">
+        <h1><strong>Amazing Tech Race</strong></h1>
+        <h6>In this treasure hunt, race around the virtual world as the sands of time are not in your favor. Use your
+          wit
+          and
+          wisdom to decode these puzling tech related questions and be the first to get to the treasure. Let the race
+          begin!
+        </h6>
+        <!-- </div>
+      <div id="rightbox" class="col s12 m6 l6"> -->
+        <div class="cta">
+          <%if(isLogged){%>
+            <a class="bttn" href="/home">Play Now</a>
+          <%}else{%>
+            <a class="bttn" href="/auth/login">Login</a>
+            <a class="bttn" href="/auth/register">Register</a>
+          <%}%>
+          
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
