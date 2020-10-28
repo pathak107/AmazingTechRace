@@ -225,12 +225,20 @@ exports.game_answerCheck = (req, res) => {
     const gameID = req.session.gameID
 
     Ques.findById(quesID, (err, ques) => {
-        if (err) console.log(err)
+        if (err){return res.json({
+            success:false,
+            answer: null,
+            error:err
+        })}
 
         if (ans.toUpperCase() == ques.answer.toUpperCase()) {
             console.log('correct')
             User.findById(req.session.user_id, (err, user) => {
-                if (err) console.log(err)
+                if (err){return res.json({
+                    success:false,
+                    answer: null,
+                    error:err
+                })}
 
                 //seraching
                 for (let i = 0; i < user.quesIndexInfo.length; i++) {
@@ -241,14 +249,26 @@ exports.game_answerCheck = (req, res) => {
                 }
                 user.score += 5;
                 user.save((err) => {
-                    if (err) console.log(err)
-                    return res.redirect('/game/play')
+                    if (err){return res.json({
+                        success:false,
+                        answer: null,
+                        error:err
+                    })}
+                    return res.json({
+                        success:true,
+                        answer: 'correct',
+                        error:null
+                    })
                 })
             })
         }
         else {
             console.log("incorrect")
-            res.redirect('/game/play')
+            return res.json({
+                success:true,
+                answer: 'incorrect',
+                error:null
+            })
         }
     })
 }

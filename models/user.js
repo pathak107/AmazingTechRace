@@ -40,8 +40,7 @@ const UserSchema = new mongoose.Schema({
         type: Array,
     },
     hintUsedQuestions:Array, // {{gameID : 512123,hintIndex:{0,1}}  game id with index of hints used
-    solvedQuestions:Array, //ques ids of solved ques
-    skippedQuestions:Array,//ques ids of skippped ques
+    timestamp:Date
 });
 
 const User = mongoose.model('User', UserSchema);
