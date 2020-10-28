@@ -39,10 +39,21 @@ const UserSchema = new mongoose.Schema({
     quesIndexInfo: { // a map of values game id and its quesIndex
         type: Array,
     },
-    hintUsedQuestions:Array, //ques ids of hints used ques and their index
+    hintUsedQuestions:Array, // {{gameID : 512123,hintIndex:{0,1}}  game id with index of hints used
     solvedQuestions:Array, //ques ids of solved ques
     skippedQuestions:Array,//ques ids of skippped ques
 });
 
 const User = mongoose.model('User', UserSchema);
 module.exports = User;
+
+//for ints used ques
+// {   
+//     {   quesID : 512123,
+//         hintIndex:[0,1]
+//     },
+//     {   quesID : 512123,
+//         hintIndex:[0,1],
+//     }
+
+// }

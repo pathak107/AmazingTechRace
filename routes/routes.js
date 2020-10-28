@@ -40,6 +40,8 @@ router.get('/game/play',checkAuth,gameController.game_play);
 router.post('/game/answerCheck',checkAuth,gameController.game_answerCheck)
 router.get('/game/quesSkip',checkAuth,gameController.game_skipQues)
 router.get('/game/buyHint',checkAuth,gameController.game_buyHints)
+router.get('/game/showHint/:quesID',checkAuth,gameController.game_showHints);
+router.get('/game/useHint/:quesID',checkAuth,gameController.game_useHints)
 // router.get('/home/leaderboard')
 // router.get('/home/instructions')
 

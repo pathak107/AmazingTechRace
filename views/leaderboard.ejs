@@ -14,115 +14,16 @@
       </thead>
 
       <tbody class="white-text">
-        <tr>
-          <td>1</td>
-          <td>Alvin</td>
-          <td>180953286</td>
-          <td>500</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Shubham Pathak</td>
-          <td>190120i12</td>
-          <td>123</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Alvin</td>
-          <td>180953286</td>
-          <td>500</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Shubham Pathak</td>
-          <td>190120i12</td>
-          <td>123</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Alvin</td>
-          <td>180953286</td>
-          <td>500</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Shubham Pathak</td>
-          <td>190120i12</td>
-          <td>123</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Alvin</td>
-          <td>180953286</td>
-          <td>500</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Shubham Pathak</td>
-          <td>190120i12</td>
-          <td>123</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Alvin</td>
-          <td>180953286</td>
-          <td>500</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Shubham Pathak</td>
-          <td>190120i12</td>
-          <td>123</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Alvin</td>
-          <td>180953286</td>
-          <td>500</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Shubham Pathak</td>
-          <td>190120i12</td>
-          <td>123</td>
-        </tr>
-
-        <tr>
-          <td>1</td>
-          <td>Alvin</td>
-          <td>180953286</td>
-          <td>500</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Shubham Pathak</td>
-          <td>190120i12</td>
-          <td>123</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Alvin</td>
-          <td>180953286</td>
-          <td>500</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Shubham Pathak</td>
-          <td>190120i12</td>
-          <td>123</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Alvin</td>
-          <td>180953286</td>
-          <td>500</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Shubham Pathak</td>
-          <td>190120i12</td>
-          <td>123</td>
-        </tr>
+        <%for(let i=0;i< users.length; i++ ){%>
+          <tr>
+            <td><%=i+1%></td>
+            <td><%=users[i].name%></td>
+            <td><%=users[i].regno%></td>
+            <td><%=users[i].score%></td>
+          </tr>
+        <%}%>
+        
+        
       </tbody>
     </table>
   </div>

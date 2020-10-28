@@ -40,7 +40,8 @@ exports.home_leaderboard = (req, res) => {
         if (err) console.log(err)
 
         return res.render('leaderboard', {
-            isLogged: req.session.isLogged
+            isLogged: req.session.isLogged,
+            users:users
         })
 
     }).sort({ score: 'DESC' })

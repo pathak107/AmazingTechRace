@@ -91,11 +91,11 @@ exports.game_createQues_get = (req, res) => {
 }
 
 exports.game_createQues = (req, res) => {
-    var hints=[]
-    if(req.body.hint1 !== ''){
+    var hints = []
+    if (req.body.hint1 !== '') {
         hints.push(req.body.hint1)
     }
-    if(req.body.hint2 !== ''){
+    if (req.body.hint2 !== '') {
         hints.push(req.body.hint2)
     }
     console.log(hints)
@@ -155,7 +155,7 @@ exports.game_start = (req, res) => {
                 return res.render('home', {
                     games: games,
                     message: "Game hasn't started yet.",
-                    isLogged:req.session.isLogged
+                    isLogged: req.session.isLogged
                 })
             })
 
@@ -165,7 +165,7 @@ exports.game_start = (req, res) => {
                 return res.render('home', {
                     games: games,
                     message: "Game already finished.",
-                    isLogged:req.session.isLogged
+                    isLogged: req.session.isLogged
                 })
             })
 
@@ -189,26 +189,29 @@ exports.game_play = (req, res) => {
                 break;
             }
         }
-        var totalQuesOfThisGame=0;
-        await Ques.countDocuments({gameID:gameID},(err,docs)=>{
-            if(err){return res.reder('errorPage',{isLogged:req.session.isLogged})}
-            totalQuesOfThisGame=docs;
+        var totalQuesOfThisGame = 0;
+        await Ques.countDocuments({ gameID: gameID }, (err, docs) => {
+            if (err) { return res.reder('errorPage', { isLogged: req.session.isLogged }) }
+            totalQuesOfThisGame = docs;
         })
-        
+
         Ques.findOne({ $and: [{ gameID: gameID }, { quesIndexInfo: quesIndex }] }, (err, ques) => {
-            if (ques == null && quesIndex>totalQuesOfThisGame) {
-                Game.findById(gameID,(err,game)=>{
-                    return res.render('gameover',{
-                        isLogged:req.session.isLogged,
-                        gameTitle:game.title
+            if ((ques == null || ques == undefined) && quesIndex <= totalQuesOfThisGame) {
+                if (err) { return res.reder('errorPage', { isLogged: req.session.isLogged }) }
+            }
+            if (ques == null && quesIndex > totalQuesOfThisGame) {
+                Game.findById(gameID, (err, game) => {
+                    return res.render('gameover', {
+                        isLogged: req.session.isLogged,
+                        gameTitle: game.title
                     })
                 }).select('title')
-            }else{
+            } else {
                 return res.render('gameplay', {
                     ques: ques,
                     message: "Type your answer in the text field.",
-                    user:user,
-                    isLogged:req.session.isLogged
+                    user: user,
+                    isLogged: req.session.isLogged
                 })
             }
         })
@@ -235,7 +238,7 @@ exports.game_answerCheck = (req, res) => {
                         user.markModified('quesIndexInfo')
                     }
                 }
-                user.score+=5;
+                user.score += 5;
                 user.save((err) => {
                     if (err) console.log(err)
                     return res.redirect('/game/play')
@@ -263,12 +266,12 @@ exports.game_skipQues = (req, res) => {
                     user.markModified('quesIndexInfo')
                 }
             }
-            user.skips-=1;
+            user.skips -= 1;
             user.save((err) => {
                 if (err) console.log(err)
                 return res.redirect('/game/play')
             })
-        } 
+        }
         else {
             console.log("no skips left")
             return res.redirect('/game/play')
@@ -282,20 +285,153 @@ exports.game_skipQues = (req, res) => {
 //show hint route
 //if(user.hintQues) contains then show the hint and do not decrement score
 //else show hint and user.hintQues should be updated and score-=2
-exports.game_showHints=(req,res)=>{
-    
+exports.game_showHints = (req, res) => {
+    const quesID = req.params.quesID;
+    User.findById(req.session.user_id, (err, user) => {
+        if (err) {
+            return res.json({
+                success: false,
+                hints: hints,
+                error: err
+            })
+        }
+
+        //serarch for quesID and hint index
+        var hintIndexArray;
+        var hints = [];
+        for (let i = 0; i < user.hintUsedQuestions.length; i++) {
+            if (quesID == user.hintUsedQuestions[i].quesID) {
+                if (user.hintUsedQuestions[i].hintIndex != null && user.hintUsedQuestions[i].hintIndex.length > 0) {
+                    hintIndexArray = user.hintUsedQuestions[i].hintIndex;
+                }
+            }
+        }
+        if (hintIndexArray == null) {
+            Ques.findById(quesID, (err, ques) => {
+                console.log('Tell user he has not used any hint for this question before')
+                return res.json({
+                    success: true,
+                    hints: hints,
+                    hintsIndexArray: [],
+                    error: null,
+                    totalHints: ques.hints.length
+                })
+            })
+
+        } else {
+            Ques.findById(quesID, (err, ques) => {
+                if (err) {
+                    return res.json({
+                        success: false,
+                        hints: hints,
+                        error: err
+                    })
+                }
+
+                for (let i = 0; i < hintIndexArray.length; i++) {
+                    hints.push(ques.hints[i])
+                }
+
+                console.log(hints)
+                console.log(hintIndexArray)
+                return res.json({
+                    success: true,
+                    hints: hints,
+                    error: null,
+                    totalHints: ques.hints.length,
+                    hintsIndexArray: hintIndexArray,
+                })
+            })
+        }
+    })
+
+}
+
+exports.game_useHints = (req, res) => {
+    const quesID = req.params.quesID;
+    User.findById(req.session.user_id, (err, user) => {
+        if (err) {
+            return res.json({
+                success: false,
+                error: err
+            })
+        }
+
+        //serarch for quesID and hint index
+        var hintIndexArray = [];
+        var totalHintIndexes = []
+        for (let i = 0; i < user.hintUsedQuestions.length; i++) {
+            if (quesID == user.hintUsedQuestions[i].quesID) {
+                if (user.hintUsedQuestions[i].hintIndex != null && user.hintUsedQuestions[i].hintIndex.length > 0) {
+                    hintIndexArray = user.hintUsedQuestions[i].hintIndex;
+                }
+            }
+        }
+        //at this point hintIndexArray can be [], [0] or [0,1]
+        console.log(hintIndexArray)
+        Ques.findById(quesID, (err, ques) => {
+            if (err) {
+                return res.json({
+                    success: false,
+                    error: err
+                })
+            }
+
+            for (let i = 0; i < ques.hints.length; i++) {
+                totalHintIndexes.push(i);
+            }
+            console.log(totalHintIndexes);
+            var hintNotUsedIndex = []
+            totalHintIndexes.filter((value) => {
+                console.log(!hintIndexArray.includes(value))
+                if (!hintIndexArray.includes(value)) {
+                    hintNotUsedIndex.push(value)
+                }
+            })
+            console.log(hintNotUsedIndex)
+            if (hintNotUsedIndex.length > 0) {
+                var hintAlreadyUsedForThisQues = false;
+                for (let i = 0; i < user.hintUsedQuestions.length; i++) {
+                    if (quesID == user.hintUsedQuestions[i].quesID) {
+                        //If user has already used a hint of this question
+                        hintAlreadyUsedForThisQues = true;
+                        user.hintUsedQuestions[i].hintIndex.push(hintNotUsedIndex[0]);
+                    }
+                }
+                if (!hintAlreadyUsedForThisQues) {
+                    //user is using hint of this question for the first time
+                    user.hintUsedQuestions.push(
+                        {
+                            quesID: quesID,
+                            hintIndex: [hintNotUsedIndex[0]]
+                        }
+                    )
+                }
+                user.markModified('hintUsedQuestions')
+                user.hints = user.hints - 1;
+                user.score = user.score - 2;
+                user.save((err) => {
+                    return res.json({
+                        success: true,
+                        error: null
+                    })
+                })
+            }
+        })
+
+    })
 }
 
 
-exports.game_buyHints=(req,res)=>{
-    User.findById(req.session.user_id,(err,user)=>{
-        if(err){return res.render('errorPage',{isLogged:req.session.isLogged})}
-        if(user){
-            if(user.score>2){
-                user.score=user.score-2;
-                user.hints=user.hints+1;
-                user.save((err)=>{
-                    if(err){return res.render('errorPage',{isLogged:req.session.isLogged})}
+exports.game_buyHints = (req, res) => {
+    User.findById(req.session.user_id, (err, user) => {
+        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
+        if (user) {
+            if (user.score > 2) {
+                user.score = user.score - 2;
+                user.hints = user.hints + 1;
+                user.save((err) => {
+                    if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
                     res.redirect('/game/play')
                 })
             }
