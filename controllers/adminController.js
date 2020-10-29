@@ -23,12 +23,19 @@ exports.admin_leaderboard = (req, res) => {
     User.find((err, users) => {
         if (err) console.log(err)
 
+        users.sort((a, b)=>{
+            if(a.score!=b.score){
+                return b.score-a.score
+            }else{
+                return a.timeTaken-b.timeTaken
+            }
+        });
         return res.render('adminLeaderboard', {
             adminLoggedIn: req.session.adminLoggedIn,
             users: users
         })
 
-    }).sort({ score: 'DESC' })
+    })
         .select('name regno score email phNumber timeTaken')
 }
 

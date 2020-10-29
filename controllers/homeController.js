@@ -11,8 +11,8 @@ exports.home_landingPage = (req, res) => {
 
 exports.home_page_get = (req, res) => {
     Game.find((err, games) => {
-        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
-        
+        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
+
         User.findById(req.session.user_id, (err, user) => {
             if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
 
@@ -34,13 +34,20 @@ exports.home_contactUs = (req, res) => {
 
 exports.home_leaderboard = (req, res) => {
     User.find((err, users) => {
-        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
 
+        users.sort((a, b)=>{
+            if(a.score!=b.score){
+                return b.score-a.score
+            }else{
+                return a.timeTaken-b.timeTaken
+            }
+        });
         return res.render('leaderboard', {
             isLogged: req.session.isLogged,
-            users:users
+            users: users
         })
 
-    }).sort({ score: 'DESC' })
+    })
         .select('name regno score timeTaken')
 }

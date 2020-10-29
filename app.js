@@ -6,6 +6,9 @@ const session = require('express-session')
 const bodyParser = require('body-parser');
 const app=express();
 
+const https = require('https');
+const fs=require('fs');
+
 //using gzip to reduce body sizes
 app.use(compression())
 
@@ -56,7 +59,17 @@ app.use((req, res) => {
   })
 
 
-
-app.listen(process.env.PORT || 3000,()=>{
+var port=process.env.PORT || 3000;
+app.listen(port,()=>{
     console.log("Server started.");
 });
+
+
+
+// const privateKey= fs.readFileSync('tech-priv.pem');
+// const certificate = fs.readFileSync('tech-pub.pem')
+
+// https.createServer({
+//   cert:certificate,
+//   key:privateKey
+// },app).listen(port);
