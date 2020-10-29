@@ -13,7 +13,7 @@ exports.register_page_get = (req, res) => {
 
 exports.register_user = (req, res) => {
     console.log(req.body);
-    User.findOne({ $or: [{ email: req.body.email }, { regno: req.body.regno }] }, (err, user) => {
+    User.findOne({ email: req.body.email}, (err, user) => {
         if (err) {
             console.log(err)
             return res.render('register', {
@@ -23,7 +23,7 @@ exports.register_user = (req, res) => {
         }
         if (user) {
             return res.render('register', {
-                message: "You are already registered with that email and registration number.",
+                message: "You are already registered with that email.",
                 isLogged: req.session.isLogged
             })
         } else {
@@ -162,7 +162,7 @@ exports.reset_password=(req,res)=>{
                     //send email
                     const mailOptions = {
                         from: "contactus@istemanipal.com", // sender address
-                        to: "smartshubhampathak@gmail.com",
+                        to: req.body.email.toString(),
                         subject: "You requested a password reset for ATR(Amazing Tech Race)", // Subject line
                         html: `<h4>Kindly click on the link provided to reset your password</h4>
                                 <a href="http://localhost:3000/auth/newPass/${resetToken}">Reset Password</a>

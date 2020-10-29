@@ -362,7 +362,8 @@ exports.game_showHints = (req, res) => {
                     hints: hints,
                     hintsIndexArray: [],
                     error: null,
-                    totalHints: ques.hints.length
+                    totalHints: ques.hints.length,
+                    userHints:user.hints
                 })
             })
 
@@ -388,6 +389,7 @@ exports.game_showHints = (req, res) => {
                     error: null,
                     totalHints: ques.hints.length,
                     hintsIndexArray: hintIndexArray,
+                    userHints:user.hints
                 })
             })
         }

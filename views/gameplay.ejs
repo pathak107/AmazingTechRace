@@ -87,7 +87,7 @@
           html += `<p>Hint ${i + 1} : ${data.hints[i]} </p>`
         }
         $("#hints").html(html);
-        if (data.hints.length < data.totalHints) {
+        if (data.hints.length < data.totalHints && data.userHints>0) {
           $("#useHintBtn").html(`<button class="bttn" onclick="useHints()">Use hint</button>`);
         } else {
           $("#useHintBtn").html('')
