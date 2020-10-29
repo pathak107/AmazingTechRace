@@ -28,6 +28,7 @@ exports.register_user = (req, res) => {
             })
         } else {
             bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
+                if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
                 const newUser = new User({
                     name: req.body.name,
                     email: req.body.email,
@@ -79,6 +80,7 @@ exports.login_user = (req, res) => {
             })
         } else {
             bcrypt.compare(req.body.password, user.password, function (err, result) {
+                if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
                 if (result == true) {
                     //user authenticated
                     req.session.user_id = user._id;
@@ -120,6 +122,7 @@ exports.changeUID_get = (req, res) => {
 
 exports.changeUID = (req, res) => {
     User.findById(req.session.user_id,(err,user)=>{
+        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
         user.regno=req.body.UID;
         user.save((err)=>{
             return res.redirect('/home')
@@ -139,11 +142,11 @@ exports.reset_password=(req,res)=>{
         return res.redirect('/auth/passReset')
     }
     crypto.randomBytes(32,(err,buffer)=>{
-        if (err) { return res.reder('errorPage', { isLogged: req.session.isLogged }) }
+        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
 
         const resetToken=buffer.toString('hex')
         User.findOne({email:req.body.email},(err,user)=>{
-            if (err) { return res.reder('errorPage', { isLogged: req.session.isLogged }) }
+            if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
             if(!user){
                 return res.render('passReset', {
                     message: "No user with that email.",
@@ -154,14 +157,11 @@ exports.reset_password=(req,res)=>{
                 user.resetToken=resetToken
                 user.resetTokenExpiration=Date.now()+(60*60*1000) //temporary token for 1 hour
                 user.save((err)=>{
-                    if (err) { 
-                        console.log(err)
-                        return res.render('errorPage', { isLogged: req.session.isLogged })  
-                    }
+                    if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
 
                     //send email
                     const mailOptions = {
-                        from: "contactus@istemanipal.com", // sender address
+                        from: "ISTE Manipal | Acumen(ATR) <contactus@istemanipal.com>", // sender address
                         to: req.body.email.toString(),
                         subject: "You requested a password reset for ATR(Amazing Tech Race)", // Subject line
                         html: `<h4>Kindly click on the link provided to reset your password</h4>

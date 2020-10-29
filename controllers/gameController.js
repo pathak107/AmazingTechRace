@@ -1,9 +1,10 @@
 const Game = require('../models/games')
 const Ques = require('../models/questions')
 const User = require('../models/user')
-const { use } = require('../routes/routes')
+
 exports.game_create_get = (req, res) => {
     Game.find((err, games) => {
+        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
         return res.render('adminCreate',
             {
                 message: "Enter details to create game.",
@@ -36,9 +37,7 @@ exports.game_delete = (req, res) => {
     const gameID = req.params.gameID;
     Game.findById(gameID, (err, game) => {
         game.remove((err) => {
-            if (err) {
-                console.log(err);
-            }
+            if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
             else {
                 return res.redirect('/admin/createGame')
             }
@@ -120,12 +119,14 @@ exports.game_start = (req, res) => {
     const gameID = req.params.gameID;
     const currTime = Date.now()
     Game.findById(gameID, (err, game) => {
-        if (err) console.log(err)
+        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+
         if (game.startTime <= currTime && game.endTime >= currTime) {
             console.log("Start the game")
             req.session.gameID = gameID;
             User.findById(req.session.user_id, (err, user) => {
-                if (err) console.log(err)
+                if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+
                 //search whether user has already played the game
                 //if true simply use the ques index already in use
                 //if false make a new ques info contining ques index of game as 1
@@ -150,7 +151,8 @@ exports.game_start = (req, res) => {
                     })
                 }
                 user.save((err, user) => {
-                    if (err) console.log(err)
+                    if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+
                     res.redirect('/game/play')
                 })
 
@@ -159,8 +161,10 @@ exports.game_start = (req, res) => {
         } else if (game.startTime > currTime) {
             console.log("Game hasn't started yet")
             Game.find((err, games) => {
+                if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+
                 User.findById(req.session.user_id, (err, user) => {
-                    if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
+                    if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
         
                     return res.render('home', {
                         games: games,
@@ -175,8 +179,9 @@ exports.game_start = (req, res) => {
         }
         else {
             Game.find((err, games) => {
+                if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
                 User.findById(req.session.user_id, (err, user) => {
-                    if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
+                    if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
         
                     return res.render('home', {
                         games: games,
@@ -196,7 +201,7 @@ exports.game_play = (req, res) => {
 
     const gameID = req.session.gameID
     User.findById(req.session.user_id, async (err, user) => {
-        if (err) console.log(err)
+        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
 
         //seraching ques index
         var quesIndex
@@ -208,16 +213,18 @@ exports.game_play = (req, res) => {
         }
         var totalQuesOfThisGame = 0;
         await Ques.countDocuments({ gameID: gameID }, (err, docs) => {
-            if (err) { return res.reder('errorPage', { isLogged: req.session.isLogged }) }
+            if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
             totalQuesOfThisGame = docs;
         })
 
         Ques.findOne({ $and: [{ gameID: gameID }, { quesIndexInfo: quesIndex }] }, (err, ques) => {
             if ((ques == null || ques == undefined) && quesIndex <= totalQuesOfThisGame) {
-                if (err) { return res.reder('errorPage', { isLogged: req.session.isLogged }) }
+                if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
             }
             if (ques == null && quesIndex > totalQuesOfThisGame) {
                 Game.findById(gameID, (err, game) => {
+                    if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+
                     return res.render('gameover', {
                         isLogged: req.session.isLogged,
                         gameTitle: game.title
@@ -304,7 +311,7 @@ exports.game_answerCheck = (req, res) => {
 exports.game_skipQues = (req, res) => {
     const gameID = req.session.gameID
     User.findById(req.session.user_id, (err, user) => {
-        if (err) console.log(err)
+        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
 
         if (user.skips > 0) {
             //seraching
@@ -316,7 +323,7 @@ exports.game_skipQues = (req, res) => {
             }
             user.skips -= 1;
             user.save((err) => {
-                if (err) console.log(err)
+                if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
                 return res.redirect('/game/play')
             })
         }
@@ -356,6 +363,14 @@ exports.game_showHints = (req, res) => {
         }
         if (hintIndexArray == null) {
             Ques.findById(quesID, (err, ques) => {
+                if (err) {
+                    return res.json({
+                        success: false,
+                        hints: hints,
+                        error: err
+                    })
+                }
+                
                 console.log('Tell user he has not used any hint for this question before')
                 return res.json({
                     success: true,

@@ -11,11 +11,8 @@ exports.home_landingPage = (req, res) => {
 
 exports.home_page_get = (req, res) => {
     Game.find((err, games) => {
-        if (err) {
-            return res.render('errorPage', {
-                isLogged: req.session.isLogged
-            })
-        }
+        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+        
         User.findById(req.session.user_id, (err, user) => {
             if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
 
@@ -37,7 +34,7 @@ exports.home_contactUs = (req, res) => {
 
 exports.home_leaderboard = (req, res) => {
     User.find((err, users) => {
-        if (err) console.log(err)
+        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
 
         return res.render('leaderboard', {
             isLogged: req.session.isLogged,
