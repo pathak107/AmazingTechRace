@@ -159,21 +159,33 @@ exports.game_start = (req, res) => {
         } else if (game.startTime > currTime) {
             console.log("Game hasn't started yet")
             Game.find((err, games) => {
-                return res.render('home', {
-                    games: games,
-                    message: "Game hasn't started yet.",
-                    isLogged: req.session.isLogged
+                User.findById(req.session.user_id, (err, user) => {
+                    if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
+        
+                    return res.render('home', {
+                        games: games,
+                        message: "This game isn't live yet.",
+                        user: user,
+                        isLogged: req.session.isLogged
+                    })
                 })
+        
             })
 
         }
         else {
             Game.find((err, games) => {
-                return res.render('home', {
-                    games: games,
-                    message: "Game already finished.",
-                    isLogged: req.session.isLogged
+                User.findById(req.session.user_id, (err, user) => {
+                    if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
+        
+                    return res.render('home', {
+                        games: games,
+                        message: "This game is already finished.",
+                        user: user,
+                        isLogged: req.session.isLogged
+                    })
                 })
+        
             })
 
         }
