@@ -31,8 +31,8 @@
                         <span class="card-title"><%= games[i].title %></span>
                         <p><%= games[i].description %></p>
                         <br>
-                        <p class="deep-purple-text darken-4">Start At: <%= games[i].startTime %></p>
-                        <p class="deep-purple-text darken-4">Ends At: <%= games[i].endTime %></p>
+                        <p class="deep-purple-text darken-4">Starts At: <%= new Date(games[i].startTime).toLocaleTimeString("en-US", {timeZone: "Asia/Kolkata"})%> <span>on <%=new Date(games[i].startTime).toLocaleDateString("en-US", {timeZone: "Asia/Kolkata"}) %></p>
+                        <p class="deep-purple-text darken-4">Ends At: <%= new Date(games[i].endTime).toLocaleTimeString("en-US", {timeZone: "Asia/Kolkata"})%> <span>on <%=new Date(games[i].endTime).toLocaleDateString("en-US", {timeZone: "Asia/Kolkata"}) %></p>
                     </div>
                     <div class="card-action deep-purple darken-4">
                         <a href="/admin/deleteGame/<%= games[i]._id %>">Delete Game</a>

@@ -34,14 +34,14 @@
                 <%}%>
                 
                 <br>
-                <p class="amber-text darken-3-text">Starts At: <%= new Date(games[i].startTime).toLocaleTimeString()%> <span>on <%=new Date(games[i].startTime).toLocaleDateString() %></span> </p>
-                <p class="amber-text darken-3-text">Ends At: <%= new Date(games[i].endTime).toLocaleTimeString()%> <span>on <%=new Date(games[i].endTime).toLocaleDateString() %></span> </p>
+                <p class="amber-text darken-3-text">Starts At: <%= new Date(games[i].startTime).toLocaleTimeString("en-US", {timeZone: "Asia/Kolkata"})%> <span>on <%=new Date(games[i].startTime).toLocaleDateString("en-US", {timeZone: "Asia/Kolkata"}) %></span> </p>
+                <p class="amber-text darken-3-text">Ends At: <%= new Date(games[i].endTime).toLocaleTimeString("en-US", {timeZone: "Asia/Kolkata"})%> <span>on <%=new Date(games[i].endTime).toLocaleDateString("en-US", {timeZone: "Asia/Kolkata"}) %></span> </p>
                 <a class="bttn" href="/game/start/<%= games[i]._id %>">Play Now</a>
               </div>
             </div>
             <%}%>
         <%}else{%>
-          <h5>There are no game at this moment.</h5>
+          <h5>There are no games at this moment.</h5>
         <%}%>
         
             

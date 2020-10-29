@@ -165,7 +165,7 @@ exports.reset_password=(req,res)=>{
                         to: req.body.email.toString(),
                         subject: "You requested a password reset for ATR(Amazing Tech Race)", // Subject line
                         html: `<h4>Kindly click on the link provided to reset your password</h4>
-                                <a href="http://localhost:3000/auth/newPass/${resetToken}">Reset Password</a>
+                                <a href="http://atr.techtatva.in/auth/newPass/${resetToken}">Reset Password</a>
                                 <p>If you didn't request for a password reset don't click on the link and please report this to us. </p>`, // plain text body
                        };
                     mailer.sendMail(mailOptions,(err)=>{
