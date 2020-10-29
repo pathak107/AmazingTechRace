@@ -4,21 +4,18 @@
 <div class="container">
 	<div class="card">
 		<div class="row">
-			<h4 class="regLog center-align">Login</h4>
+			<h4 class="regLog center-align">Password Reset</h4>
 		</div>
 		<div class="card-content white">
-			<form action="/auth/login" method="POST">
+            <form action="/auth/passReset" method="POST">
+                <p>We will send you a password reset email. Please click on the link in the email for further process.</p>
 				<p> <%= message%></p>
 				<div class="inputs">
 					<div class="input">
 						<input placeholder="Email" name="email" type="email">
 					</div>
-					<div class="input">
-						<input placeholder="Password" name="password" type="password">
-					</div>
 				</div>
-				<button class="bttn" type="submit">Login</button>
-				<a class="bttn" href="/auth/passReset">Forgot Password ?</a>
+				<button class="bttn" type="submit">Send Mail</button>
 			</form>
 		</div>
 	</div>

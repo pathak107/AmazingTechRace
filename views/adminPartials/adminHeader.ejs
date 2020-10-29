@@ -17,16 +17,18 @@
 <body>
     <nav>
         <div class="nav-wrapper">
-          <a href="#" class="brand-logo">ATR</a>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
-            
-            <li><a href="/admin/createGame">Create Game</a></li>
-            <li><a href="/admin/createQues">Create Question</a></li>
-            <%if(adminLoggedIn==true){%>
+            <a href="#" class="brand-logo">ATR</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+
+
+                <%if(adminLoggedIn==true){%>
+                <li><a href="/admin/createGame">Create Game</a></li>
+                <li><a href="/admin/leaderboard">Leaderboard</a></li>
+                <li><a href="/admin/createQues">Create Question</a></li>
                 <li><a href="/admin/logout">Logout</a></li>
-            <%}else{%>
+                <%}else{%>
                 <li><a href="/admin/login">Login</a></li>
-            <%}%>
+                <%}%>
           </ul>
         </div>
     </nav>

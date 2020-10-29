@@ -8,10 +8,11 @@
 		</div>
 		<div class="card-content white">
 			<form action="/auth/changeUID" method="POST">
+				<p>You can avail prizes only if you have a valid user ID, validity of which will be checked at the time of declaration of winners.</p>
 				<p> <%= message%></p>
 				<div class="inputs">
 					<div class="input">
-						<input placeholder="New User ID" name="UID" type="number">
+						<input placeholder="New User ID" name="UID" min="4" max="4" type="number">
 					</div>
 				</div>
 				<button class="bttn" type="submit">Change</button>

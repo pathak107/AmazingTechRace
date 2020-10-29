@@ -14,6 +14,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+
     phNumber: {
         type: String,
         required: true
@@ -39,7 +40,13 @@ const UserSchema = new mongoose.Schema({
         type: Array,
     },
     hintUsedQuestions:Array, // {{gameID : 512123,hintIndex:{0,1}}  game id with index of hints used
-    timestamp:Date
+    timestamp:Date,
+    timeTaken:{
+        type: Number,
+        default: 0,
+    },
+    resetToken:String,
+    resetTokenExpiration:Date
 });
 
 const User = mongoose.model('User', UserSchema);

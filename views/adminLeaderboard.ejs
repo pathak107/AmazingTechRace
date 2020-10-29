@@ -1,0 +1,37 @@
+<%- include('./adminPartials/adminHeader'); -%>
+<div class="container">
+    <div class="container">
+      <br>
+      <br>
+      <table class="highlight centered ">
+        <thead>
+          <tr class="amber-text text-darken-3">
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Ph Number</th>
+            <th>TT User ID</th>
+            <th>Score</th>
+            <th>Time(sec)</th>
+          </tr>
+        </thead>
+  
+        <tbody>
+          <%for(let i=0;i< users.length; i++ ){%>
+            <tr>
+              <td><%=i+1%></td>
+              <td><%=users[i].name%></td>
+              <td><%=users[i].email%></td>
+              <td><%=users[i].phNumber%></td>
+              <td><%=users[i].regno%></td>
+              <td><%=users[i].score%></td>
+              <td><%=users[i].timeTaken%></td>
+            </tr>
+          <%}%>
+          
+          
+        </tbody>
+      </table>
+    </div>
+  
+  </div>

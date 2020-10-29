@@ -50,7 +50,9 @@ app.use('/',routes);
 
 //404 page
 app.use((req, res) => {
-    res.send('404 error');
+    return res.render('404error.ejs',{
+      isLogged:req.session.isLogged
+    })
   })
 
 

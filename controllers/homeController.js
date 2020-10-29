@@ -45,5 +45,5 @@ exports.home_leaderboard = (req, res) => {
         })
 
     }).sort({ score: 'DESC' })
-        .select('name regno score')
+        .select('name regno score timeTaken')
 }

@@ -136,7 +136,9 @@ p {
     font-family: 'Oxygen', sans-serif;
     font-weight: 800;
 }
-
+.Quest{
+    text-align: center;
+}
 .Quest h5 {
     font-family: 'Oxygen', sans-serif;
     font-weight: 800;
