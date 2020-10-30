@@ -59,17 +59,17 @@ app.use((req, res) => {
   })
 
 
-var port=process.env.PORT || 80;
-app.listen(port,()=>{
-    console.log("Server started.");
-});
+var port=process.env.PORT || 443;
+// app.listen(port,()=>{
+//     console.log("Server started.");
+// });
 
 
 
-// const privateKey= fs.readFileSync('tech-priv.pem');
-// const certificate = fs.readFileSync('tech-pub.pem')
+const privateKey= fs.readFileSync('tech-priv.pem');
+const certificate = fs.readFileSync('tech-pub.pem')
 
-// https.createServer({
-//   cert:certificate,
-//   key:privateKey
-// },app).listen(port);
+https.createServer({
+  cert:certificate,
+  key:privateKey
+},app).listen(port);
