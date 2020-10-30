@@ -4,7 +4,7 @@ const User = require('../models/user')
 
 exports.game_create_get = (req, res) => {
     Game.find((err, games) => {
-        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
         return res.render('adminCreate',
             {
                 message: "Enter details to create game.",
@@ -37,7 +37,7 @@ exports.game_delete = (req, res) => {
     const gameID = req.params.gameID;
     Game.findById(gameID, (err, game) => {
         game.remove((err) => {
-            if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+            if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
             else {
                 return res.redirect('/admin/createGame')
             }
@@ -97,7 +97,6 @@ exports.game_createQues = (req, res) => {
     if (req.body.hint2 !== '') {
         hints.push(req.body.hint2)
     }
-    console.log(hints)
     Ques.find({ gameID: req.body.gameID }).countDocuments((err, totalQuesOfThisGame) => {
         const newQues = new Ques({
             question: req.body.question,
@@ -119,13 +118,12 @@ exports.game_start = (req, res) => {
     const gameID = req.params.gameID;
     const currTime = Date.now()
     Game.findById(gameID, (err, game) => {
-        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
 
         if (game.startTime <= currTime && game.endTime >= currTime) {
-            console.log("Start the game")
             req.session.gameID = gameID;
             User.findById(req.session.user_id, (err, user) => {
-                if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+                if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
 
                 //search whether user has already played the game
                 //if true simply use the ques index already in use
@@ -139,19 +137,18 @@ exports.game_start = (req, res) => {
                 }
                 if (!hasPlayed) {
                     //todo: update hints and skips based on game
-                    user.hints=user.hints+2;
-                    user.skips=user.skips+3;
+                    user.hints = user.hints + 2;
+                    user.skips = user.skips + 3;
 
                     //saving the timestamp
-                    user.timestamp=Date.now()
-                    console.log(user.timestamp)
+                    user.timestamp = Date.now()
                     user.quesIndexInfo.push({
                         gameID: gameID,
                         quesIndex: 1
                     })
                 }
                 user.save((err, user) => {
-                    if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+                    if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
 
                     res.redirect('/game/play')
                 })
@@ -159,13 +156,12 @@ exports.game_start = (req, res) => {
             })
 
         } else if (game.startTime > currTime) {
-            console.log("Game hasn't started yet")
             Game.find((err, games) => {
-                if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+                if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
 
                 User.findById(req.session.user_id, (err, user) => {
-                    if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
-        
+                    if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
+
                     return res.render('home', {
                         games: games,
                         message: "This game isn't live yet.",
@@ -173,16 +169,16 @@ exports.game_start = (req, res) => {
                         isLogged: req.session.isLogged
                     })
                 })
-        
+
             })
 
         }
         else {
             Game.find((err, games) => {
-                if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+                if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
                 User.findById(req.session.user_id, (err, user) => {
-                    if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
-        
+                    if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
+
                     return res.render('home', {
                         games: games,
                         message: "This game is already finished.",
@@ -190,7 +186,7 @@ exports.game_start = (req, res) => {
                         isLogged: req.session.isLogged
                     })
                 })
-        
+
             })
 
         }
@@ -201,7 +197,7 @@ exports.game_play = (req, res) => {
 
     const gameID = req.session.gameID
     User.findById(req.session.user_id, async (err, user) => {
-        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
 
         //seraching ques index
         var quesIndex
@@ -213,24 +209,30 @@ exports.game_play = (req, res) => {
         }
         var totalQuesOfThisGame = 0;
         await Ques.countDocuments({ gameID: gameID }, (err, docs) => {
-            if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+            if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
             totalQuesOfThisGame = docs;
         })
 
         Ques.findOne({ $and: [{ gameID: gameID }, { quesIndexInfo: quesIndex }] }, (err, ques) => {
-            if ((ques == null || ques == undefined) && quesIndex <= totalQuesOfThisGame) {
-                if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+            if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
+
+            else if ((ques == null || ques == undefined) && quesIndex <= totalQuesOfThisGame) {
+                return res.render('errorPage', { isLogged: req.session.isLogged })
             }
-            if (ques == null && quesIndex > totalQuesOfThisGame) {
+            else if (ques == null && quesIndex > totalQuesOfThisGame) {
                 Game.findById(gameID, (err, game) => {
-                    if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+                    if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
 
                     return res.render('gameover', {
                         isLogged: req.session.isLogged,
                         gameTitle: game.title
                     })
                 }).select('title')
-            } else {
+            }
+            else if (ques == null) {
+                return res.render('errorPage', { isLogged: req.session.isLogged })
+            }
+            else {
                 return res.render('gameplay', {
                     ques: ques,
                     message: "Type your answer in the text field.",
@@ -248,20 +250,24 @@ exports.game_answerCheck = (req, res) => {
     const gameID = req.session.gameID
 
     Ques.findById(quesID, (err, ques) => {
-        if (err){return res.json({
-            success:false,
-            answer: null,
-            error:err
-        })}
+        if (err) {
+            return res.json({
+                success: false,
+                answer: null,
+                error: err
+            })
+        }
 
         if (ans.toUpperCase().replace(/\s+/g, '') == ques.answer.toUpperCase().replace(/\s+/g, '')) {
-            console.log('correct')
+            
             User.findById(req.session.user_id, (err, user) => {
-                if (err){return res.json({
-                    success:false,
-                    answer: null,
-                    error:err
-                })}
+                if (err) {
+                    return res.json({
+                        success: false,
+                        answer: null,
+                        error: err
+                    })
+                }
                 //seraching
                 for (let i = 0; i < user.quesIndexInfo.length; i++) {
                     if (user.quesIndexInfo[i].gameID == gameID) {
@@ -273,35 +279,36 @@ exports.game_answerCheck = (req, res) => {
                 //calulate the difference in time for solving this question and also update
                 //the timestamp for next question
                 var timeDiff;
-                if(Date.now() - (new Date(user.timestamp)) > 0){
-                    timeDiff= Date.now() - (new Date(user.timestamp));
+                if (Date.now() - (new Date(user.timestamp)) > 0) {
+                    timeDiff = Date.now() - (new Date(user.timestamp));
                 }
-                
+
                 //inverse bcoz more the time taken lesser should be the score
                 //5* bcoz we're assumin for 5 days
-                user.timeTaken += Math.ceil(timeDiff/1000); //time taken is seconds
-                user.score+= 5;
-                user.timestamp=Date.now()
+                user.timeTaken += Math.ceil(timeDiff / 1000); //time taken is seconds
+                user.score += 5;
+                user.timestamp = Date.now()
                 user.save((err) => {
-                    if (err){return res.json({
-                        success:false,
-                        answer: null,
-                        error:err
-                    })}
+                    if (err) {
+                        return res.json({
+                            success: false,
+                            answer: null,
+                            error: err
+                        })
+                    }
                     return res.json({
-                        success:true,
+                        success: true,
                         answer: 'correct',
-                        error:null
+                        error: null
                     })
                 })
             })
         }
         else {
-            console.log("incorrect")
             return res.json({
-                success:true,
+                success: true,
                 answer: 'incorrect',
-                error:null
+                error: null
             })
         }
     })
@@ -311,7 +318,7 @@ exports.game_answerCheck = (req, res) => {
 exports.game_skipQues = (req, res) => {
     const gameID = req.session.gameID
     User.findById(req.session.user_id, (err, user) => {
-        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+        if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
 
         if (user.skips > 0) {
             //seraching
@@ -323,12 +330,11 @@ exports.game_skipQues = (req, res) => {
             }
             user.skips -= 1;
             user.save((err) => {
-                if (err) { return res.render('errorPage', { isLogged: req.session.isLogged })  }
+                if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
                 return res.redirect('/game/play')
             })
         }
         else {
-            console.log("no skips left")
             return res.redirect('/game/play')
         }
     })
@@ -370,15 +376,14 @@ exports.game_showHints = (req, res) => {
                         error: err
                     })
                 }
-                
-                console.log('Tell user he has not used any hint for this question before')
+
                 return res.json({
                     success: true,
                     hints: hints,
                     hintsIndexArray: [],
                     error: null,
                     totalHints: ques.hints.length,
-                    userHints:user.hints
+                    userHints: user.hints
                 })
             })
 
@@ -396,15 +401,13 @@ exports.game_showHints = (req, res) => {
                     hints.push(ques.hints[i])
                 }
 
-                console.log(hints)
-                console.log(hintIndexArray)
                 return res.json({
                     success: true,
                     hints: hints,
                     error: null,
                     totalHints: ques.hints.length,
                     hintsIndexArray: hintIndexArray,
-                    userHints:user.hints
+                    userHints: user.hints
                 })
             })
         }
@@ -433,7 +436,7 @@ exports.game_useHints = (req, res) => {
             }
         }
         //at this point hintIndexArray can be [], [0] or [0,1]
-        console.log(hintIndexArray)
+        
         Ques.findById(quesID, (err, ques) => {
             if (err) {
                 return res.json({
@@ -445,15 +448,12 @@ exports.game_useHints = (req, res) => {
             for (let i = 0; i < ques.hints.length; i++) {
                 totalHintIndexes.push(i);
             }
-            console.log(totalHintIndexes);
             var hintNotUsedIndex = []
             totalHintIndexes.filter((value) => {
-                console.log(!hintIndexArray.includes(value))
                 if (!hintIndexArray.includes(value)) {
                     hintNotUsedIndex.push(value)
                 }
             })
-            console.log(hintNotUsedIndex)
             if (hintNotUsedIndex.length > 0) {
                 var hintAlreadyUsedForThisQues = false;
                 for (let i = 0; i < user.hintUsedQuestions.length; i++) {

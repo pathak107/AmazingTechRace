@@ -12,10 +12,8 @@ exports.register_page_get = (req, res) => {
 }
 
 exports.register_user = (req, res) => {
-    console.log(req.body);
     User.findOne({ email: req.body.email}, (err, user) => {
         if (err) {
-            console.log(err)
             return res.render('register', {
                 message: "Some error occured in registration. Please try again later.",
                 isLogged: req.session.isLogged
@@ -38,7 +36,6 @@ exports.register_user = (req, res) => {
                 })
                 newUser.save((err, newUser) => {
                     if (err) {
-                        console.log(err)
                         return res.render('register', {
                             message: "Some error occured in registration. Please try again later.",
                             isLogged: req.session.isLogged
@@ -64,10 +61,8 @@ exports.login_page_get = (req, res) => {
 }
 
 exports.login_user = (req, res) => {
-    console.log(req.body);
     User.findOne({ email: req.body.email }, (err, user) => {
         if (err) {
-            console.log(err)
             return res.render('login', {
                 message: "Some error occured in login. Please try again later.",
                 isLogged: req.session.isLogged
@@ -153,7 +148,6 @@ exports.reset_password=(req,res)=>{
                     isLogged: req.session.isLogged
                 });
             }else{
-                console.log(resetToken)
                 user.resetToken=resetToken
                 user.resetTokenExpiration=Date.now()+(60*60*1000) //temporary token for 1 hour
                 user.save((err)=>{
@@ -170,7 +164,6 @@ exports.reset_password=(req,res)=>{
                        };
                     mailer.sendMail(mailOptions,(err)=>{
                         if (err) { 
-                            console.log(err)
                             return res.render('errorPage', { isLogged: req.session.isLogged }) 
                         }
                         res.redirect('/auth/login')
@@ -185,7 +178,6 @@ exports.newPassword_get=(req,res)=>{
     const token=req.params.token;
     User.findOne({resetToken:token, resetTokenExpiration:{$gt: Date.now()}},(err,user)=>{
         if (err || !user) { 
-            console.log(err)
             return res.render('errorPage', { isLogged: req.session.isLogged }) 
         }
         return res.render('newPass', {
@@ -204,7 +196,6 @@ exports.newPassword_set=(req,res)=>{
     const userID=req.body.userID
     User.findOne({resetToken:token, resetTokenExpiration:{$gt: Date.now()}, _id:userID},(err,user)=>{
         if (err || !user) { 
-            console.log(err)
             return res.render('errorPage', { isLogged: req.session.isLogged }) 
         }
         bcrypt.hash(password, saltRounds,(err, hash) =>{

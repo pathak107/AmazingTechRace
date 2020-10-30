@@ -79,8 +79,6 @@
 
     $.get("/game/showHint/<%= ques._id %>", function (data, status) {
       if (data.success == true) {
-        console.log(data.hints)
-        console.log(data.totalHints)
 
         var html = "";
         for (let i = 0; i < data.hints.length; i++) {

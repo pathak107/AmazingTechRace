@@ -42,7 +42,6 @@ exports.admin_leaderboard = (req, res) => {
 exports.admin_logout = (req, res) => {
     req.session.destroy((err) => {
         if (err) console.log(err);
-        console.log('logged out');
         res.redirect('/admin/login');
     })
 }
