@@ -6,8 +6,7 @@ const session = require('express-session')
 const bodyParser = require('body-parser');
 const app=express();
 
-const https = require('https');
-const fs=require('fs');
+
 
 //using gzip to reduce body sizes
 app.use(compression())
