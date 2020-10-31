@@ -155,7 +155,7 @@ exports.reset_password=(req,res)=>{
 
                     //send email
                     const mailOptions = {
-                        from: "ISTE Manipal | Acumen(ATR) <contactus@istemanipal.com>", // sender address
+                        from: "Acumen(ATR) | ISTE Manipal <acumen.techtatva@istemanipal.com>", // sender address
                         to: req.body.email.toString(),
                         subject: "You requested a password reset for ATR(Amazing Tech Race)", // Subject line
                         html: `<h4>Kindly click on the link provided to reset your password</h4>

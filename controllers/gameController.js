@@ -237,7 +237,7 @@ exports.game_play = (req, res) => {
                     ques: ques,
                     message: "Type your answer in the text field.",
                     user: user,
-                    isLogged: req.session.isLogged
+                    isLogged: req.session.isLogged,
                 })
             }
         })
@@ -329,6 +329,7 @@ exports.game_skipQues = (req, res) => {
                 }
             }
             user.skips -= 1;
+            user.timestamp = Date.now()
             user.save((err) => {
                 if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
                 return res.redirect('/game/play')
