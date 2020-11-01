@@ -29,7 +29,7 @@
           <p style="color: black;"><%= games[i].description %></p>
           <% for(var j=0;j< user.quesIndexInfo.length; j++){ %>
           <%if(user.quesIndexInfo[j].gameID==games[i]._id){%>
-          <%if(user.quesIndexInfo[j].quesIndex < 7){%>
+          <%if(user.quesIndexInfo[j].quesIndex < 31){%>
           <p style="color: black;"> <%=user.quesIndexInfo[j].quesIndex%>/30</p>
           <%}else{%>
           <p style="color: black;"> Solved.</p>
