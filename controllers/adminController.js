@@ -1,3 +1,4 @@
+const Ques = require('../models/questions');
 const User=require('../models/user')
 exports.admin_login_get = (req, res) => {
     res.render('adminLogin', {
@@ -43,5 +44,46 @@ exports.admin_logout = (req, res) => {
     req.session.destroy((err) => {
         if (err) console.log(err);
         res.redirect('/admin/login');
+    })
+}
+
+
+exports.admin_editQues_get=(req,res)=>{
+    const quesID=req.params.quesID;
+    Ques.findById(quesID,(err,ques)=>{
+        if(err){ 
+            console.log(err)
+            return;
+        }
+
+        return res.render('adminEditQues',{
+            message:"Edit the question",
+            adminLoggedIn: req.session.adminLoggedIn,
+            ques:ques
+        })
+    })
+}
+
+exports.admin_editQues=(req,res)=>{
+    var hints = []
+    if (req.body.hint1 !== '') {
+        hints.push(req.body.hint1)
+    }
+    if (req.body.hint2 !== '') {
+        hints.push(req.body.hint2)
+    }
+    Ques.findById(req.body.quesID,(err,ques)=>{
+        
+            ques.question= req.body.question;
+            ques.answer=req.body.answer;
+            ques.hints= hints;
+
+            ques.save((err, newQues) => {
+                if (err) {
+                    console.log(err);
+                }
+                res.redirect('/admin/createQues')
+            })
+
     })
 }

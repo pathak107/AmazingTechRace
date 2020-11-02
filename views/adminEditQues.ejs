@@ -11,54 +11,24 @@
 <script src="/js/image-resize.min.js"></script>
 
 <div class="container">
-    <h1>Create Questions</h1>
+    <h1>Edit Questions</h1>
     <h3><%=message%></h3>
-    <form action="/admin/createQues" method="post">
-        <label for="game">Choose a Game:</label>
-        <div class="input-field">
-            <select required id="game" name="gameID">
-                <%for(var i=0;i< games.length; i++){%>
-                <option value="<%=games[i]._id%>"><%=games[i].title%></option>
-                <%}%>
-            </select>
-        </div>
+    <form action="/admin/editQues" method="post">
+       
         
         <input type="text" name="question" id="question" hidden>
         <label for="editor-container">Type your question here.</label>
-        <div class="cyan darken-3" id="editor-container" class="materialize-textarea " style="height: 200px;"></div>
+        <div class="cyan darken-3" id="editor-container" class="materialize-textarea" style="height: 200px;"><%-ques.question%></div>
             <br>
-        
-        <input required type="text" name="answer" id="" placeholder="answer">
-        <input type="text" name="hint1" placeholder="hint for the question(optional)">
-        <input type="text" name="hint2" placeholder="hint for the question(optional)">
-        <button class="btn waves-effect waves-light" type="submit" name="action">Create Question</button>
+        <input hidden type="text" name="quesID" value="<%=ques._id%>">
+        <input required type="text" value="<%=ques.answer%>" name="answer" placeholder="answer">
+        <input type="text" value="<%=ques.hints[0]%>" name="hint1" placeholder="hint for the question(optional)">
+        <input type="text" value="<%=ques.hints[1]%>" name="hint2" placeholder="hint for the question(optional)">
+        <button class="btn waves-effect waves-light" type="submit" name="action">Edit Question</button>
     </form>
     <br>
     
     
-    <div class="row">
-        <%for(var i=0;i<questions.length;i++){%>
-                <div class="col s12 m4 l3 deep-purple lighten-5" style="margin-left: 2.5rem; margin-right: 2.5rem;">
-                    <div>
-                        <h5><%=questions[i].game%></h5>
-                        <%for(var j=0;j<questions[i].questions.length;j++){%>
-                        <ul class="collection with-header">
-                            <li class="collection-header teal lighten-2">
-                                <h5>Q <%=questions[i].questions[j].quesIndexInfo%></h5>
-                            </li>
-                            <li class="collection-item cyan darken-3">Question: <%-questions[i].questions[j].question%></li>
-                            <li class="collection-item">Answer: <%=questions[i].questions[j].answer%></li>
-                            <li class="collection-item">Hint: <%=questions[i].questions[j].hints[0]%></li>
-                            <li class="collection-item">Hint: <%=questions[i].questions[j].hints[1]%></li>
-                            <li class="collection-item"><a href="/admin/editQues/<%-questions[i].questions[j]._id%>">Edit</a></li>
-                        </ul>
-                        <%}%>
-                </div>
-                    
-            </div>
-                
-        <%}%>
-                    </div>
 
                 </div>
 
@@ -73,10 +43,6 @@
                     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
                 <script>
-                    $(document).ready(function () {
-                        $('select').formSelect();
-                    });
-
                     var toolbarOptions = [
                         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
                         ['blockquote', 'code-block'],

@@ -34,6 +34,8 @@ router.post('/admin/createGame',adminAuthCheck,gameController.game_create)
 router.get('/admin/deleteGame/:gameID',adminAuthCheck,gameController.game_delete)
 router.get('/admin/createQues',adminAuthCheck,gameController.game_createQues_get)
 router.post('/admin/createQues',adminAuthCheck,gameController.game_createQues)
+router.get('/admin/editQues/:quesID',adminAuthCheck,adminController.admin_editQues_get)
+router.post('/admin/editQues',adminAuthCheck,adminController.admin_editQues)
 
 // //home related routes
 router.get('/',homeController.home_landingPage);
