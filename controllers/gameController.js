@@ -285,7 +285,7 @@ exports.game_answerCheck = (req, res) => {
 
                 //inverse bcoz more the time taken lesser should be the score
                 //5* bcoz we're assumin for 5 days
-                user.timeTaken += Math.ceil(timeDiff / 1000); //time taken is seconds
+                user.timeTaken += Math.ceil(timeDiff / 100); //time taken in seconds * 10
                 user.score += 5;
                 user.timestamp = Date.now()
                 user.save((err) => {
