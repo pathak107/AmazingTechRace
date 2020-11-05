@@ -36,6 +36,7 @@ router.get('/admin/createQues',adminAuthCheck,gameController.game_createQues_get
 router.post('/admin/createQues',adminAuthCheck,gameController.game_createQues)
 router.get('/admin/editQues/:quesID',adminAuthCheck,adminController.admin_editQues_get)
 router.post('/admin/editQues',adminAuthCheck,adminController.admin_editQues)
+router.get('/admin/leaderboardDownload',adminAuthCheck,adminController.create_Leaderboard_Excel);
 
 // //home related routes
 router.get('/',homeController.home_landingPage);
