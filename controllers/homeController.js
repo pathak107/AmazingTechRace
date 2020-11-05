@@ -32,22 +32,36 @@ exports.home_contactUs = (req, res) => {
     })
 }
 
+const USERS_PER_PAGE = 50;
 exports.home_leaderboard = (req, res) => {
+    let page = +req.query.page || 1;
     User.find((err, users) => {
         if (err) { return res.render('errorPage', { isLogged: req.session.isLogged }) }
 
-        users.sort((a, b)=>{
-            if(a.score!=b.score){
-                return b.score-a.score
-            }else{
-                return a.timeTaken-b.timeTaken
+        users.sort((a, b) => {
+            if (a.score != b.score) {
+                return b.score - a.score
+            } else {
+                return a.timeTaken - b.timeTaken
             }
         });
+
+        var hasNextPage=page < Math.ceil((users.length)/USERS_PER_PAGE)
+        users=users.slice((page-1)*USERS_PER_PAGE, (page-1)*USERS_PER_PAGE + USERS_PER_PAGE)
+        var rank=[]
+        for(let i=(page-1)*USERS_PER_PAGE; i< (page-1)*USERS_PER_PAGE + USERS_PER_PAGE; i++){
+            rank.push(i+1);
+        }
         return res.render('leaderboard', {
             isLogged: req.session.isLogged,
-            users: users
+            users: users,
+            ranks:rank,
+            currentPage:page,
+            hasNextPage: hasNextPage,
+            hasPrevPage:(page>1),
+            prevPage:(page-1)
         })
 
-    })
+    }).sort({ score: 'DESC' })
         .select('name regno score timeTaken')
 }
