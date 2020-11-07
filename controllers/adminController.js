@@ -227,6 +227,8 @@ exports.create_finalLead_Excel = (req, res) => {
             { header: 'TT UserID', key: 'TTUID' },
             { header: 'Score', key: 'score' },
             { header: 'Time Taken', key: 'timeTaken' },
+            { header: 'Completed At', key: 'timestamp' },
+            { header: 'Completed At', key: 'timestamp2' },
         ]
 
         User.find({ regno: { $in: top50Players } },(err, users) => {
@@ -236,11 +238,18 @@ exports.create_finalLead_Excel = (req, res) => {
                 if (a.score != b.score) {
                     return b.score - a.score
                 } else {
-                    return a.timeTaken - b.timeTaken
+                    return a.timestamp - b.timestamp
                 }
             });
             users.forEach((user, index) => {
-                worksheet.addRow({ rank: index + 1, TTUID: user.regno, score: user.score, timeTaken: user.timeTaken });
+                worksheet.addRow({ 
+                    rank: index + 1, 
+                    TTUID: user.regno, 
+                    score: user.score, 
+                    timeTaken: user.timeTaken ,
+                    timestamp:new Date(user.timestamp).toLocaleTimeString("en-US", {timeZone: "Asia/Kolkata"}),
+                    timestamp2:new Date(user.timestamp).toLocaleDateString("en-US", {timeZone: "Asia/Kolkata"})
+                });
             })
 
             let fileName = path.join(__dirname, `../public/excelSheets/finalLead${Date.now().toString()}.csv`);
@@ -250,7 +259,7 @@ exports.create_finalLead_Excel = (req, res) => {
             });
 
         })
-            .select('regno score timeTaken')
+            .select('regno score timeTaken timestamp')
     });
 }
 

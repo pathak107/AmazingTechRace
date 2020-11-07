@@ -128,7 +128,7 @@ exports.home_finalLead = (req, res) => {
             if (a.score != b.score) {
                 return b.score - a.score
             } else {
-                return a.timeTaken - b.timeTaken
+                return a.timestamp - b.timestamp
             }
         });
         return res.render('finalLead', {
