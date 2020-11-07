@@ -13,12 +13,12 @@ const checkAuth=require('../middlewares/checkAuth')
 
 //auth routes
 router.get('/auth/login',authController.login_page_get);
-router.get('/auth/register',authController.register_page_get)
+// router.get('/auth/register',authController.register_page_get)
 router.get('/auth/logout',authController.logout_user)
 router.post('/auth/login',authController.login_user)
-router.post('/auth/register',authController.register_user)
-router.get('/auth/changeUID',checkAuth,authController.changeUID_get)
-router.post('/auth/changeUID',checkAuth,authController.changeUID)
+// router.post('/auth/register',authController.register_user)
+// router.get('/auth/changeUID',checkAuth,authController.changeUID_get)
+// router.post('/auth/changeUID',checkAuth,authController.changeUID)
 router.get('/auth/passReset',authController.reset_get)
 router.post('/auth/passReset',authController.reset_password)
 router.get('/auth/newPass/:token',authController.newPassword_get);
