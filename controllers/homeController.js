@@ -131,12 +131,11 @@ exports.home_finalLead = (req, res) => {
                 return a.timeTaken - b.timeTaken
             }
         });
-        users = users.slice(0, 50)
         return res.render('finalLead', {
             isLogged: req.session.isLogged,
             users: users,
         })
 
     }).sort({ score: 'DESC' })
-        .select('name regno score timeTaken')
+        .select('name regno score timeTaken timestamp')
 }

@@ -239,7 +239,6 @@ exports.create_finalLead_Excel = (req, res) => {
                     return a.timeTaken - b.timeTaken
                 }
             });
-            users=users.slice(0,50)
             users.forEach((user, index) => {
                 worksheet.addRow({ rank: index + 1, TTUID: user.regno, score: user.score, timeTaken: user.timeTaken });
             })
@@ -257,7 +256,7 @@ exports.create_finalLead_Excel = (req, res) => {
 
 
 exports.admin_setTopScoresTo0=(req,res)=>{
-    User.updateMany({ regno:{ $in: top50Players }},{ $set : { "score" : 0, timeTaken:0}},(err,users)=>{
+    User.updateMany({ regno:{ $in: top50Players }},{ $set : {hints:3,skips:2}},(err,users)=>{
         if(err) console.log(err)
 
         console.log(users);
