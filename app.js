@@ -58,7 +58,7 @@ app.use((req, res) => {
   })
 
 
-var port=process.env.PORT || 3000;
+var port=process.env.PORT || 80;
 app.listen(port,()=>{
     console.log("Server started.");
 });
