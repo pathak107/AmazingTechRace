@@ -1,0 +1,36 @@
+<%- include('./partials/header.ejs'); -%>
+<div class="container">
+    <br>
+    <div class="center-align">
+        <h4>Final leaderborad</h4>
+    <p style="color: white;">This will be considered as the final leaderboard who participated in bonus round and were in the top 50 till the end of ATR Day 3.</p>
+    </div>
+    
+    <br>
+    <table class="highlight centered ">
+      <thead>
+        <tr class="amber-text text-darken-3">
+          <th>Rank</th>
+          <th>Name</th>
+          <th>TT User ID</th>
+          <th>Score</th>
+          <th>Time(sec)</th>
+        </tr>
+      </thead>
+
+      <tbody class="white-text">
+        <%for(let i=0;i< users.length; i++ ){%>
+          <tr>
+            <td><%=i+1%></td>
+            <td><%=users[i].name%></td>
+            <td><%=users[i].regno%></td>
+            <td><%=users[i].score%></td>
+            <td><%=(users[i].timeTaken/10)%></td>
+          </tr>
+        <%}%>
+        
+        
+      </tbody>
+    </table>
+    <br>
+</div>

@@ -233,12 +233,20 @@ exports.game_play = (req, res) => {
                 return res.render('errorPage', { isLogged: req.session.isLogged })
             }
             else {
-                return res.render('gameplay', {
-                    ques: ques,
-                    message: "Type your answer in the text field.",
-                    user: user,
-                    isLogged: req.session.isLogged,
-                })
+                Game.findById(gameID, (err, game) => {
+                    if(game.endTime < Date.now()){
+                        return res.render('gameover', {
+                            isLogged: req.session.isLogged,
+                            gameTitle: game.title
+                        })
+                    }
+                    return res.render('gameplay', {
+                        ques: ques,
+                        message: "Type your answer in the text field.",
+                        user: user,
+                        isLogged: req.session.isLogged,
+                    })
+                }) 
             }
         })
     })

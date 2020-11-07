@@ -37,12 +37,15 @@ router.post('/admin/createQues',adminAuthCheck,gameController.game_createQues)
 router.get('/admin/editQues/:quesID',adminAuthCheck,adminController.admin_editQues_get)
 router.post('/admin/editQues',adminAuthCheck,adminController.admin_editQues)
 router.get('/admin/leaderboardDownload',adminAuthCheck,adminController.create_Leaderboard_Excel);
+router.get('/admin/finalLeadDownload',adminAuthCheck,adminController.create_finalLead_Excel);
+router.get('/admin/setTopWinners',adminAuthCheck,adminController.admin_setTopScoresTo0);
 
 // //home related routes
 router.get('/',homeController.home_landingPage);
 router.get('/home',checkAuth,homeController.home_page_get);
 router.get('/home/contact',homeController.home_contactUs);
-router.get('/home/leaderboard',homeController.home_leaderboard);
+// router.get('/home/leaderboard',homeController.home_leaderboard);
+router.get('/home/finalLead',homeController.home_finalLead)
 
 
 router.get('/game/start/:gameID',checkAuth,gameController.game_start)
