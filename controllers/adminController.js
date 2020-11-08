@@ -224,6 +224,9 @@ exports.create_finalLead_Excel = (req, res) => {
         let worksheet = workbook.addWorksheet('leaderboard')
         worksheet.columns = [
             { header: 'Rank', key: 'rank' },
+            { header: 'Email', key: 'email' },
+            { header: 'Phone Number', key: 'phNumber' },
+            { header: 'Name', key: 'name' },
             { header: 'TT UserID', key: 'TTUID' },
             { header: 'Score', key: 'score' },
             { header: 'Time Taken', key: 'timeTaken' },
@@ -238,15 +241,18 @@ exports.create_finalLead_Excel = (req, res) => {
                 if (a.score != b.score) {
                     return b.score - a.score
                 } else {
-                    return a.timestamp - b.timestamp
+                    return a.timeTaken - b.timeTaken
                 }
             });
             users.forEach((user, index) => {
                 worksheet.addRow({ 
                     rank: index + 1, 
+                    email:user.email,
+                    phNumber:user.phNumber,
+                    name:user.name,
                     TTUID: user.regno, 
                     score: user.score, 
-                    timeTaken: user.timeTaken ,
+                    timeTaken: user.timeTaken/10,
                     timestamp:new Date(user.timestamp).toLocaleTimeString("en-US", {timeZone: "Asia/Kolkata"}),
                     timestamp2:new Date(user.timestamp).toLocaleDateString("en-US", {timeZone: "Asia/Kolkata"})
                 });
@@ -259,7 +265,6 @@ exports.create_finalLead_Excel = (req, res) => {
             });
 
         })
-            .select('regno score timeTaken timestamp')
     });
 }
 

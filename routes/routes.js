@@ -45,7 +45,7 @@ router.get('/',homeController.home_landingPage);
 router.get('/home',checkAuth,homeController.home_page_get);
 router.get('/home/contact',homeController.home_contactUs);
 // router.get('/home/leaderboard',homeController.home_leaderboard);
-router.get('/home/finalLead',homeController.home_finalLead)
+// router.get('/home/finalLead',homeController.home_finalLead)
 
 
 router.get('/game/start/:gameID',checkAuth,gameController.game_start)
