@@ -5,7 +5,8 @@
 
 # Features:
   - ##### Materialize CSS used to make entire front end, mongoDB and Express for backend.
-  - ##### Admin pannel let's you create quizes and set their start and end time. It also allows you to add questions and to a particular quiz. It uses a WYSIWYG editor quill to create questions with ease. 
+  - ##### Admin pannel lets you create quizes and set their start and end time. It also allows you to add questions to a particular quiz and later has the option to edit them. It uses a WYSIWYG editor quill to create questions with ease. 
   - ##### Admin pannel also allows you to download the excel sheet of all the participants and their details like time, score, email etc using excelJS npm package.
-  - ##### Users can create thier account and has all the basic featured of authentication like sessions, password reset, password hashing etc.
+  - ##### Users can create thier account and has all the basic features of authentication like sessions, password reset, password hashing etc.
   - ##### Users can track their scores and times in the leaderboard.
+  - ##### The game also has features like - use hint, buy hints and skip a question.
